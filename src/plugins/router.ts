@@ -78,7 +78,11 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: "",
-        redirect: "/discover",
+        redirect: () => {
+          const startupView =
+            localStorage.getItem("frontend.settings.startup_view") || "discover";
+          return `/${startupView}`;
+        },
       },
       {
         // "/home" has now been renamed to "/discover". This
