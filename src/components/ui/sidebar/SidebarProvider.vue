@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { cn } from "@/lib/utils";
-import { store } from "@/plugins/store";
 import {
   defaultDocument,
   useEventListener,

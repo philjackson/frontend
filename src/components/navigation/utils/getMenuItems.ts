@@ -28,7 +28,10 @@ export interface MenuItem {
 
 export const getMenuItems = function () {
   // TODO: Remove localStorage fallback once migration period is over (menu_items moved to user preferences)
-  const userMenuItems = store.currentUser?.preferences?.menu_items;
+  const userMenuItems = store.currentUser?.preferences?.menu_items as
+    | string
+    | string[]
+    | undefined;
   const storedMenuConf = localStorage.getItem("frontend.settings.menu_items");
 
   let enabledItems: string[];

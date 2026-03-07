@@ -95,7 +95,7 @@ onMounted(() => {
       ],
       multi_value: false,
       category: "preferences",
-      value: store.currentUser?.preferences?.theme || storedTheme,
+      value: (store.currentUser?.preferences?.theme as string) || storedTheme,
     },
     {
       key: "language",
@@ -112,7 +112,7 @@ onMounted(() => {
       multi_value: false,
       category: "preferences",
       value:
-        store.currentUser?.preferences?.language ||
+        (store.currentUser?.preferences?.language as string) ||
         localStorage.getItem("frontend.settings.language"),
     },
     {
@@ -135,7 +135,10 @@ onMounted(() => {
       ],
       multi_value: false,
       category: "preferences",
-      value: store.currentUser?.preferences?.startup_view || "discover",
+      value:
+          (store.currentUser?.preferences?.startup_view as string) ||
+          localStorage.getItem("frontend.settings.startup_view") ||
+          "home",
     },
     {
       key: "menu_items",
@@ -162,7 +165,7 @@ onMounted(() => {
       ],
       multi_value: true,
       category: "preferences",
-      value: store.currentUser?.preferences?.menu_items || enabledMenuItems,
+      value: (store.currentUser?.preferences?.menu_items as string[] | string) || enabledMenuItems,
     },
     {
       key: "enable_browser_controls",
