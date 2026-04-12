@@ -259,6 +259,7 @@ export const showContextMenuForMediaItem = async function (
   posY = 0,
   includePlayMenuItems = false,
   showPlayMenuHeader = false,
+  sortBy?: string,
 ) {
   // show ContextMenu for given MediaItem(s)
   const mediaItems: MediaItemTypeOrItemMapping[] = Array.isArray(item)
@@ -285,7 +286,11 @@ export const showContextMenuForMediaItem = async function (
     itemIsAvailable(mediaItems[0])
   ) {
     // Play menu items first, then context items
-    menuItems = await getPlaybackContextMenuItems(mediaItems, parentItem);
+    menuItems = await getPlaybackContextMenuItems(
+      mediaItems,
+      parentItem,
+      sortBy,
+    );
     menuItems.push(...contextMenuItems);
   } else {
     // No play items - just show context menu items directly
@@ -889,6 +894,7 @@ export const getContextMenuItems = async function (
 export const getPlaybackContextMenuItems = async function (
   items: MediaItemTypeOrItemMapping[],
   parentItem?: MediaItemType,
+  sortBy?: string,
 ) {
   const playMenuItems: ContextMenuItem[] = [];
   if (items.length == 0 || !itemIsAvailable(items[0])) {
@@ -922,6 +928,8 @@ export const getPlaybackContextMenuItems = async function (
             undefined,
             false,
             playableItems[0].item_id,
+            undefined,
+            sortBy,
           );
         },
         icon: "mdi-play-circle-outline",
@@ -934,7 +942,14 @@ export const getPlaybackContextMenuItems = async function (
       playMenuItems.push({
         label: "play_album_from",
         action: () => {
-          api.playMedia(parentItem.uri, undefined, false, firstItem.item_id);
+          api.playMedia(
+            parentItem.uri,
+            undefined,
+            false,
+            firstItem.item_id,
+            undefined,
+            sortBy,
+          );
         },
         icon: "mdi-play-circle-outline",
         labelArgs: [],
